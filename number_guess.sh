@@ -2,11 +2,12 @@
 PSQL="psql --username=freecodecamp --dbname=number_guess -t --no-align -c"
 
 echo "Enter your username:"
-
 read USERNAME
 
 USERNAME_AVAIL=$($PSQL "select username from users where username='$USERNAME'")
+
 GAMES_PLAYED=$($PSQL "select count(*) from users inner join games using(user_id) where username='$USERNAME'")
+
 BEST_GAME=$($PSQL "select MIN(number_guesses) from users inner join games using(user_id) where username='$USERNAME'")
 
 if [[ -z $USERNAME_AVAIL ]]
